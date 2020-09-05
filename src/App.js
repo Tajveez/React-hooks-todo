@@ -8,6 +8,19 @@ function App() {
     const allTodos = [...todos, { text: value, isCompleted: false }];
     setTodos(allTodos);
   };
+
+  const completeTodo = (index) => {
+    const allTodos = [...todos];
+    allTodos[index].isCompleted = !allTodos[index].isCompleted;
+    setTodos(allTodos);
+  };
+
+  const deleteTodo = (index) => {
+    const allTodos = [...todos];
+    allTodos.splice(index, 1);
+    setTodos(allTodos);
+  };
+
   const [todos, setTodos] = useState([
     {
       text: "learn react",
@@ -15,7 +28,7 @@ function App() {
     },
     {
       text: "Watch Movie",
-      isCompleted: false,
+      isCompleted: true,
     },
 
     {
@@ -27,7 +40,13 @@ function App() {
     <div className="app">
       <div className="todo-list">
         {todos.map((todo, index) => (
-          <Todo key={index} todo={todo} index={index} />
+          <Todo
+            key={index}
+            todo={todo}
+            index={index}
+            completeTodo={completeTodo}
+            deleteTodo={deleteTodo}
+          />
         ))}
         <TodoForm addTodo={addTodo} />
       </div>
