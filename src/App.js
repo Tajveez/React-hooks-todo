@@ -4,38 +4,32 @@ import TodoForm from "./components/TodoForm";
 import "./App.css";
 
 function App() {
+  const saveTodos = (todos) => {
+    setTodos(todos);
+    window.localStorage.setItem("todos", JSON.stringify(todos));
+  };
   const addTodo = (value) => {
     const allTodos = [...todos, { text: value, isCompleted: false }];
-    setTodos(allTodos);
+    saveTodos(allTodos);
   };
 
   const completeTodo = (index) => {
     const allTodos = [...todos];
     allTodos[index].isCompleted = !allTodos[index].isCompleted;
-    setTodos(allTodos);
+    saveTodos(allTodos);
   };
 
   const deleteTodo = (index) => {
     const allTodos = [...todos];
     allTodos.splice(index, 1);
-    setTodos(allTodos);
+    saveTodos(allTodos);
   };
 
-  const [todos, setTodos] = useState([
-    {
-      text: "learn react",
-      isCompleted: false,
-    },
-    {
-      text: "Watch Movie",
-      isCompleted: true,
-    },
+  const todoData = window.localStorage.getItem("todos")
+    ? JSON.parse(window.localStorage.getItem("todos"))
+    : [];
 
-    {
-      text: "Buy shoes",
-      isCompleted: false,
-    },
-  ]);
+  const [todos, setTodos] = useState(todoData);
   return (
     <div className="app">
       <div className="todo-list">
